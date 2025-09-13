@@ -451,7 +451,28 @@ function playSound(step){
 }
 
 
+    const modal = document.getElementById('imgModal');
+  const img = document.getElementById('myImage');
+  const modalImg = document.getElementById('imgModalContent');
+  const caption = document.getElementById('imgCaption');
+  const closeBtn = document.getElementsByClassName('img-close')[0];
 
+  img.onclick = function() {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    caption.innerHTML = this.alt;
+  }
+
+  closeBtn.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // ปิด modal เมื่อคลิกที่พื้นหลัง
+  modal.onclick = function(e) {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  }
 </script>
 </body>
 </html>
