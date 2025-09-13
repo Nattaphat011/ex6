@@ -5,9 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ultimate Festival Fireworks</title>
 <style>
-body { font-family:'Prompt',sans-serif; background:#fff5f5; color:#660000; margin:0; padding:20px; overflow:auto; position:relative;}
-h1 { color:#cc0000; text-align:center; }
-h2 { color:#cc0000; }
+/* ===== Base ===== */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;500;700&display=swap');
+body {
+  font-family: 'Prompt', sans-serif;
+  background: #fff5f5;
+  color: #660000;
+  margin: 0; padding: 20px;
+  overflow-x: hidden;
+  position: relative;
+  font-size: 1rem;
+}
+h1 { color: #cc0000; text-align: center; font-size: 2rem; }
+h2 { color: #cc0000; font-size: 1.3rem; }
+
 .card {
   background: linear-gradient(135deg,
               rgba(255, 26, 26, 0.3) 0%,
@@ -16,64 +27,242 @@ h2 { color:#cc0000; }
   padding: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(153,0,0,0.25);
-  margin-bottom: 20px;
+  margin: 20px auto;
   border: 1px solid rgba(204,0,0,0.4);
+  max-width: 600px;
   position: relative;
   z-index: 1;
 }
-.result { margin-top:10px; padding:10px; background:#ffe5e5; border-left:4px solid #cc0000; border-radius:6px; font-weight:bold; position:relative; z-index:1; }
-.badge { display:inline-block; background:#ff6666; color:white; padding:4px 8px; margin:4px; border-radius:6px; font-weight:bold; transition: all 0.5s ease; }
-.badge.active { background:#ff1a1a; box-shadow:0 0 10px #ff4d4d; animation: blink 1s infinite; }
-@keyframes blink { 0%,100%{box-shadow:0 0 10px #ff4d4d;} 50%{box-shadow:0 0 20px #ff0000;} }
-input,textarea { border:2px solid #cc0000; border-radius:6px; padding:6px; font-size:14px; }
-input:focus,textarea:focus { outline:none; border-color:#990000; box-shadow:0 0 5px #cc0000; }
 
-/* Firework */
-.firework { position:absolute; pointer-events:none; border-radius:50%; z-index:999; }
+.result {
+  margin-top: 10px;
+  padding: 10px;
+  background: #ffe5e5;
+  border-left: 4px solid #cc0000;
+  border-radius: 6px;
+  font-weight: bold;
+  position: relative;
+  z-index: 1;
+}
 
-/* Emoji background effect */
-.emoji { position:absolute; font-size:20px; pointer-events:none; opacity:0.7; animation: floatUp linear infinite; }
-@keyframes floatUp { 
-  0% {transform:translateY(0); opacity:1;} 
-  100% {transform:translateY(-120vh); opacity:0;} 
+.badge {
+  display: inline-block;
+  background: #ff6666;
+  color: white;
+  padding: 4px 8px;
+  margin: 4px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: all 0.5s ease;
+}
+.badge.active {
+  background: #ff1a1a;
+  box-shadow: 0 0 10px #ff4d4d;
+  animation: blink 1s infinite;
+}
+@keyframes blink {
+  0%,100% { box-shadow: 0 0 10px #ff4d4d; }
+  50% { box-shadow: 0 0 20px #ff0000; }
+}
+
+input, textarea {
+  border: 2px solid #cc0000;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #990000;
+  box-shadow: 0 0 5px #cc0000;
+}
+button {
+  background: #cc0000;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* ===== Firework / Emoji ===== */
+.firework {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 999;
+}
+.emoji {
+  position: absolute;
+  font-size: 20px;
+  pointer-events: none;
+  opacity: 0.7;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0% {transform:translateY(0); opacity:1;}
+  100% {transform:translateY(-120vh); opacity:0;}
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.2rem; }
+  .card { max-width: 90%; }
+  img.goal-img { max-width: 400px; }
+}
+@media (max-width: 480px) {
+  body { padding: 10px; font-size: 0.9rem; }
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.1rem; }
+  button { width: 100%; font-size: 0.9rem; }
+  img.goal-img { max-width: 90%; }
+}
+
+     .result {
+      margin-top: 10px;
+      background: rgba(255,255,255,0.9);
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+ /* โลโก้ลอย */
+ .floating-img {
+      display: block;
+      margin: 0 auto 25px auto;
+      width: 150px;
+      animation: float 3s ease-in-out infinite;
+      max-width: 40%;
+    }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+/* สไตล์สำหรับ modal รูปภาพ */
+   img.goal-img {
+  display: block;
+  margin: 0 auto 20px;
+  width: 100%;          /* ให้กินความกว้างเต็ม container */
+  max-width: 350px;     /* แต่ไม่เกิน 500px บนจอใหญ่ */
+  height: auto;         /* คงอัตราส่วน */
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  object-fit: cover;
+  cursor: zoom-in; /* เปลี่ยนเคอร์เซอร์เป็นสัญลักษณ์ขยาย */
+}
+
+/* สไตล์สำหรับ modal รูปภาพ */
+.img-modal {
+  display: none; /* ซ่อน modal เริ่มต้น */
+  position: fixed;
+  z-index: 1000;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: rgba(0,0,0,0.85);
+}
+
+.img-modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+.img-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.img-close:hover {
+  color: #ff6b6b;
+}
+
+em {
+  display: block;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  color: #555;
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
+<img src="images/หัวข้อ6.jpg" 
+     alt="รูปภาพ" 
+     class="goal-img"
+     id="myImage">
+<!-- หมายเหตุสามารถแตะรูปภาพเพื่อขยายภาพได้ -->
+ <em> (สามารถแตะรูปภาพเพื่อขยายภาพได้) </em>
+
+
+     <div id="imgModal" class="img-modal">
+  <span class="img-close">&times;</span>
+  <img class="img-modal-content" id="imgModalContent">
+  <div id="imgCaption"></div>
+</div>
+
+  <!-- โลโก้ -->
+  <img src="https://www.web.bcnsurat.ac.th/wp-content/uploads/2024/08/logo-%E0%B8%A7%E0%B8%9E%E0%B8%9A.png"
+       alt="โลโก้วิทยาลัย"
+       class="floating-img">
 
 <h1>🔥 Ultimate Festival Fireworks 🔥</h1>
 
 <!-- Cards -->
 <div class="card">
   <h2>1) สิ่งที่คุณทำได้ดีที่สุด</h2>
-  <input id="best1" placeholder="สิ่งที่ 1"><br><br>
-  <input id="best2" placeholder="สิ่งที่ 2"><br><br>
-  <input id="best3" placeholder="สิ่งที่ 3"><br><br>
+  <input id="best1" placeholder="สิ่งที่ 1">
+  <input id="best2" placeholder="สิ่งที่ 2">
+  <input id="best3" placeholder="สิ่งที่ 3">
   <button onclick="showBest()">✨ แสดงพลังของคุณ</button>
   <div id="bestResult" class="result"></div>
 </div>
 
 <div class="card">
   <h2>2) Challenge "ตัวคุณ" เพื่อเอาชนะกำแพงในใจของคุณให้ได้</h2>
-  <input id="learn" placeholder="สิ่งที่คุณอยากเรียนรู้"><br><br>
-  <input id="act1" placeholder="กิจกรรมที่ 1"><br><br>
-  <input id="act2" placeholder="กิจกรรมที่ 2"><br><br>
-  <input id="act3" placeholder="กิจกรรมที่ 3"><br><br>
+  <input id="learn" placeholder="สิ่งที่คุณอยากเรียนรู้">
+  <input id="act1" placeholder="กิจกรรมที่ 1">
+  <input id="act2" placeholder="กิจกรรมที่ 2">
+  <input id="act3" placeholder="กิจกรรมที่ 3">
   <button onclick="showChallenge()">🚀 เริ่มภารกิจ</button>
   <div id="chalResult" class="result"></div>
 </div>
 
 <div class="card">
   <h2>3) แผนผังเวลาการใช้ชีวิตใน 1 วัน</h2>
-  <textarea id="dayPlan" rows="3" style="width:100%;" placeholder="เช่น นอน 8 ชม. เรียน 5 ชม. เล่นมือถือ 3 ชม. ..."></textarea><br><br>
+  <textarea id="dayPlan" rows="3" placeholder="เช่น นอน 8 ชม. เรียน 5 ชม. เล่นมือถือ 3 ชม. ..."></textarea>
   <button onclick="showPlan()">🕒 สรุปเวลา</button>
   <div id="planResult" class="result"></div>
 </div>
 
 <div class="card">
   <h2>4) ชื่นชม และต่อยอดศักยภาพของคุณให้ดียิ่งขึ้น 💎</h2>
-  <input id="proud" style="width:100%;" placeholder="คุณภูมิใจที่..."><br><br>
-  <input id="apply" style="width:100%;" placeholder="คุณจะนำไปใช้โดย..."><br><br>
+  <input id="proud" placeholder="คุณภูมิใจที่...">
+  <input id="apply" placeholder="คุณจะนำไปใช้โดย...">
   <button onclick="showProud()">🌈 ส่งต่อพลังบวก</button>
   <div id="proudResult" class="result"></div>
 </div>
@@ -85,57 +274,51 @@ input:focus,textarea:focus { outline:none; border-color:#990000; box-shadow:0 0 
 <audio id="soundFinal" src="https://www.soundjay.com/misc/fanfare-trumpets-01.mp3"></audio>
 
 <script>
-let stepsCompleted={best:false, challenge:false, plan:false, proud:false};
-const emojis=["🔥","☄️","🌠","⭐️","⚡️","💥"];
-const colors=['#ff1a1a','#ff6600','#ffcc00'];
+let stepsCompleted = {best:false, challenge:false, plan:false, proud:false};
+const emojis = ["🔥","☄️","🌠","⭐️","⚡️","💥"];
+const colors = ['#ff1a1a','#ff6600','#ffcc00'];
 
-// Play sound
 function playSound(step){
-  let audio=document.getElementById('sound1');
-  if(step=='challenge') audio=document.getElementById('sound2');
-  else if(step=='plan') audio=document.getElementById('sound3');
-  else if(step=='proud') audio=document.getElementById('sound1');
+  let audio = document.getElementById('sound1');
+  if(step==='challenge') audio=document.getElementById('sound2');
+  else if(step==='plan') audio=document.getElementById('sound3');
+  else if(step==='proud') audio=document.getElementById('sound1');
   audio.play();
 }
-
-// Firework
 function createFirework(x,y){
-  let color=colors[Math.floor(Math.random()*colors.length)];
-  let fw=document.createElement('div');
-  fw.classList.add('firework');
-  fw.style.left=x+'px';
-  fw.style.top=y+'px';
-  let size=10+Math.random()*15;
-  fw.style.width=fw.style.height=size+'px';
-  fw.style.background=`radial-gradient(circle, ${color} 0%, #fff 80%)`;
+  let color = colors[Math.floor(Math.random()*colors.length)];
+  let fw = document.createElement('div');
+  fw.className = 'firework';
+  fw.style.left = x+'px';
+  fw.style.top = y+'px';
+  let size = 10+Math.random()*15;
+  fw.style.width = fw.style.height = size+'px';
+  fw.style.background = `radial-gradient(circle, ${color} 0%, #fff 80%)`;
   document.body.appendChild(fw);
   fw.animate([{transform:'scale(0.1)',opacity:1},{transform:`scale(${1+Math.random()*2})`,opacity:0}],{duration:1000,easing:'ease-out'});
   setTimeout(()=>fw.remove(),1000);
 }
-
-// Firework Festival loop
+// Random fireworks
 setInterval(()=>{
-  let x=Math.random()*window.innerWidth;
-  let y=Math.random()*window.innerHeight*0.7;
+  let x = Math.random()*window.innerWidth;
+  let y = Math.random()*window.innerHeight*0.7;
   for(let i=0;i<5;i++){
     setTimeout(()=>createFirework(x+Math.random()*100-50,y+Math.random()*100-50),i*150);
   }
 },3000);
-
-// Emoji float loop
+// Floating emojis
 setInterval(()=>{
   let e=document.createElement('div');
-  e.classList.add('emoji');
+  e.className='emoji';
   e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
   e.style.left=Math.random()*window.innerWidth+'px';
-  e.style.bottom="-30px";
+  e.style.bottom='-30px';
   e.style.fontSize=(15+Math.random()*30)+'px';
   e.style.animationDuration=(5+Math.random()*5)+'s';
   document.body.appendChild(e);
   setTimeout(()=>e.remove(),10000);
 },800);
 
-// Final Firework
 function fireworkFinal(){
   document.getElementById('soundFinal').play();
   for(let i=0;i<20;i++){
@@ -143,49 +326,69 @@ function fireworkFinal(){
   }
   setTimeout(()=>alert("🎉 ยินดีด้วย! คุณปลดล็อกพลังสูงสุดแล้ว! 🔥"),500);
 }
-
-// Check explosion
 function checkExplosion(){
   if(stepsCompleted.best && stepsCompleted.challenge && stepsCompleted.plan && stepsCompleted.proud){
     fireworkFinal();
   }
 }
 
-// Section functions
 function showBest(){
   playSound('best');
-  let b1=document.getElementById('best1').value;
-  let b2=document.getElementById('best2').value;
-  let b3=document.getElementById('best3').value;
-  let badges=[b1,b2,b3].filter(b=>b).map(b=>`<span class="badge active">${b}</span>`).join(' ');
+  let vals=[best1.value,best2.value,best3.value].filter(Boolean);
+  let badges=vals.map(v=>`<span class="badge active">${v}</span>`).join(' ');
   let msgs=["สุดยอด! คุณคือคนที่มีความสามารถจริงๆ 🎉","ว้าว! นี่คือเส้นทางแห่งศักยภาพของคุณ 🔥","เก่งมากๆ สิ่งเหล่านี้จะพาคุณไปสู่ความสำเร็จ 🚀"];
-  document.getElementById('bestResult').innerHTML=`<b>การ์ดความสามารถของคุณ:</b><br>${badges}<br><br>${msgs[Math.floor(Math.random()*msgs.length)]}`;
+  bestResult.innerHTML=`<b>การ์ดความสามารถของคุณ:</b><br>${badges}<br><br>${msgs[Math.floor(Math.random()*msgs.length)]}`;
   stepsCompleted.best=true; checkExplosion();
 }
 function showChallenge(){
   playSound('challenge');
-  let learn=document.getElementById('learn').value;
-  let a1=document.getElementById('act1').value;
-  let a2=document.getElementById('act2').value;
-  let a3=document.getElementById('act3').value;
-  document.getElementById('chalResult').innerHTML=`🎯 เรียนรู้: <b>${learn}</b><br>1) ${a1}<br>2) ${a2}<br>3) ${a3}`;
+  chalResult.innerHTML=`🎯 เรียนรู้: <b>${learn.value}</b><br>1) ${act1.value}<br>2) ${act2.value}<br>3) ${act3.value}`;
   stepsCompleted.challenge=true; checkExplosion();
 }
 function showPlan(){
   playSound('plan');
-  let plan=document.getElementById('dayPlan').value;
-  let sides=["ด้านร่างกาย 💪","ด้านความรู้ 📚","ด้านสังคม 🤝","ด้านจิตใจ ❤️"];
-  document.getElementById('planResult').innerHTML=`📌 แผน 24 ชม.:<br>${plan}<br>พัฒนาด้าน: <b>${sides[Math.floor(Math.random()*sides.length)]}</b>`;
+  const sides=["ด้านร่างกาย 💪","ด้านความรู้ 📚","ด้านสังคม 🤝","ด้านจิตใจ ❤️"];
+  planResult.innerHTML=`📌 แผน 24 ชม.:<br>${dayPlan.value}<br>พัฒนาด้าน: <b>${sides[Math.floor(Math.random()*sides.length)]}</b>`;
   stepsCompleted.plan=true; checkExplosion();
 }
 function showProud(){
   playSound('proud');
-  let proud=document.getElementById('proud').value;
-  let apply=document.getElementById('apply').value;
-  let msgs=["การเห็นคุณค่าในตัวเองคือก้าวแรกสู่การเติบโต 🌱","ความภาคภูมิใจเล็กๆ จะต่อยอดเป็นความสำเร็จใหญ่ 🔥","เมื่อคุณเชื่อมั่นในตัวเอง โลกก็จะเชื่อมั่นในคุณด้วย 🌍"];
-  document.getElementById('proudResult').innerHTML=`💖 ภูมิใจ: <b>${proud}</b><br>🌟 นำไปใช้: <b>${apply}</b><br>${msgs[Math.floor(Math.random()*msgs.length)]}`;
+  const msgs=["การเห็นคุณค่าในตัวเองคือก้าวแรกสู่การเติบโต 🌱","ความภาคภูมิใจเล็กๆ จะต่อยอดเป็นความสำเร็จใหญ่ 🔥","เมื่อคุณเชื่อมั่นในตัวเอง โลกก็จะเชื่อมั่นในคุณด้วย 🌍"];
+  proudResult.innerHTML=`💖 ภูมิใจ: <b>${proud.value}</b><br>🌟 นำไปใช้: <b>${apply.value}</b><br>${msgs[Math.floor(Math.random()*msgs.length)]}`;
   stepsCompleted.proud=true; checkExplosion();
 }
+
+  // 🎉 ลิบบิ้นตอนเปิดหน้า
+  window.addEventListener('load', () => {
+    confetti({
+      particleCount: 120,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+  });
+
+    const modal = document.getElementById('imgModal');
+  const img = document.getElementById('myImage');
+  const modalImg = document.getElementById('imgModalContent');
+  const caption = document.getElementById('imgCaption');
+  const closeBtn = document.getElementsByClassName('img-close')[0];
+
+  img.onclick = function() {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    caption.innerHTML = this.alt;
+  }
+
+  closeBtn.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // ปิด modal เมื่อคลิกที่พื้นหลัง
+  modal.onclick = function(e) {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  }
 </script>
 </body>
 </html>
