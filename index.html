@@ -7,94 +7,137 @@
 <style>
 /* ===== Base ===== */
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;500;700&display=swap');
+
+:root {
+  --red-main: #cc0000;
+  --red-light: #ff4d4d;
+  --pink-bg: #fff5f5;
+  --card-grad: linear-gradient(135deg,
+              rgba(255, 50, 50, 0.35) 0%,
+              rgba(255, 120, 60, 0.35) 50%,
+              rgba(255, 210, 100, 0.35) 100%);
+}
+
 body {
   font-family: 'Prompt', sans-serif;
-  background: #fff5f5;
-  color: #660000;
-  margin: 0; padding: 20px;
+  background: var(--pink-bg);
+  color: #5a0000;
+  margin: 0;
+  padding: 20px;
   overflow-x: hidden;
   position: relative;
   font-size: 1rem;
+  line-height: 1.6;
 }
-h1 { color: #cc0000; text-align: center; font-size: 2rem; }
-h2 { color: #cc0000; font-size: 1.3rem; }
 
+/* ===== Heading ===== */
+h1 {
+  color: var(--red-main);
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 2px 6px rgba(204,0,0,0.25);
+}
+h2 {
+  color: var(--red-main);
+  font-size: 1.4rem;
+  margin-top: 0;
+  font-weight: 600;
+}
+
+/* ===== Card ===== */
 .card {
-  background: linear-gradient(135deg,
-              rgba(255, 26, 26, 0.3) 0%,
-              rgba(255, 102, 0, 0.3) 50%,
-              rgba(255, 204, 0, 0.3) 100%);
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(153,0,0,0.25);
-  margin: 20px auto;
-  border: 1px solid rgba(204,0,0,0.4);
-  max-width: 600px;
+  background: var(--card-grad);
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(153,0,0,0.25);
+  margin: 25px auto;
+  border: 1px solid rgba(204,0,0,0.2);
+  max-width: 650px;
   position: relative;
   z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(153,0,0,0.35);
 }
 
+/* ===== Result Box ===== */
 .result {
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 15px;
+  padding: 15px;
   background: #ffe5e5;
-  border-left: 4px solid #cc0000;
-  border-radius: 6px;
-  font-weight: bold;
+  border-left: 6px solid var(--red-main);
+  border-radius: 10px;
+  font-weight: 600;
   position: relative;
   z-index: 1;
+  box-shadow: inset 0 0 8px rgba(204,0,0,0.1);
 }
 
+/* ===== Badge ===== */
 .badge {
   display: inline-block;
-  background: #ff6666;
-  color: white;
-  padding: 4px 8px;
-  margin: 4px;
-  border-radius: 6px;
-  font-weight: bold;
+  background: var(--red-light);
+  color: #fff;
+  padding: 6px 12px;
+  margin: 6px 4px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
   transition: all 0.5s ease;
 }
 .badge.active {
-  background: #ff1a1a;
-  box-shadow: 0 0 10px #ff4d4d;
+  background: var(--red-main);
+  box-shadow: 0 0 12px var(--red-light);
   animation: blink 1s infinite;
 }
 @keyframes blink {
-  0%,100% { box-shadow: 0 0 10px #ff4d4d; }
-  50% { box-shadow: 0 0 20px #ff0000; }
+  0%,100% { box-shadow: 0 0 12px var(--red-light); }
+  50%     { box-shadow: 0 0 20px var(--red-main); }
 }
 
-input, textarea {
-  border: 2px solid #cc0000;
-  border-radius: 6px;
-  padding: 6px;
+/* ===== Form Elements ===== */
+input,
+textarea {
+  border: 2px solid var(--red-main);
+  border-radius: 10px;
+  padding: 10px 12px;
   font-size: 1rem;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  background: rgba(255,255,255,0.8);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: none;
-  border-color: #990000;
-  box-shadow: 0 0 5px #cc0000;
-}
-button {
-  background: #cc0000;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 18px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  border-color: var(--red-light);
+  box-shadow: 0 0 8px var(--red-light);
 }
 
-/* ===== Firework / Emoji ===== */
+/* ===== Buttons ===== */
+button {
+  background: linear-gradient(135deg, var(--red-main), var(--red-light));
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(204,0,0,0.4);
+}
+
+/* ===== Firework & Emoji ===== */
 .firework {
   position: absolute;
   pointer-events: none;
@@ -105,7 +148,7 @@ button:hover {
   position: absolute;
   font-size: 20px;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.8;
   animation: floatUp linear infinite;
 }
 @keyframes floatUp {
@@ -115,16 +158,16 @@ button:hover {
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
-  h1 { font-size: 1.8rem; }
+  h1 { font-size: 2rem; }
   h2 { font-size: 1.2rem; }
-  .card { max-width: 90%; }
+  .card { max-width: 92%; padding: 20px; }
   img.goal-img { max-width: 400px; }
 }
 @media (max-width: 480px) {
-  body { padding: 10px; font-size: 0.9rem; }
-  h1 { font-size: 1.5rem; }
+  body { padding: 12px; font-size: 0.95rem; }
+  h1 { font-size: 1.7rem; }
   h2 { font-size: 1.1rem; }
-  button { width: 100%; font-size: 0.9rem; }
+  button { width: 100%; font-size: 0.95rem; }
   img.goal-img { max-width: 90%; }
 }
 
