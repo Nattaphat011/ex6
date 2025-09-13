@@ -20,7 +20,9 @@
 
 body {
   font-family: 'Prompt', sans-serif;
-  background: var(--pink-bg);
+  background: linear-gradient(270deg,#ffb3b3,#ffd480,#ffe680,#ffb3b3);
+  background-size: 800% 800%;
+  animation: bgMove 20s ease infinite;
   color: #5a0000;
   margin: 0;
   padding: 20px;
@@ -28,6 +30,11 @@ body {
   position: relative;
   font-size: 1rem;
   line-height: 1.6;
+}
+@keyframes bgMove {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
 }
 
 /* ===== Heading ===== */
@@ -95,6 +102,17 @@ h2 {
   box-shadow: 0 0 12px var(--red-light);
   animation: blink 1s infinite;
 }
+
+@keyframes btnShake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+button.playing {
+  animation: btnShake 0.3s;
+}
+
+
 @keyframes blink {
   0%,100% { box-shadow: 0 0 12px var(--red-light); }
   50%     { box-shadow: 0 0 20px var(--red-main); }
@@ -157,19 +175,29 @@ button:hover {
 }
 
 /* ===== Responsive ===== */
+/* ปรับสำหรับแท็บเล็ต */
 @media (max-width: 768px) {
+  body { padding: 15px; font-size: 0.95rem; }
   h1 { font-size: 2rem; }
   h2 { font-size: 1.2rem; }
-  .card { max-width: 92%; padding: 20px; }
+  .card { max-width: 95%; padding: 18px; }
   img.goal-img { max-width: 400px; }
+  .floating-img { width: 120px; max-width: 35%; }
 }
+
+/* ปรับสำหรับมือถือ */
 @media (max-width: 480px) {
-  body { padding: 12px; font-size: 0.95rem; }
-  h1 { font-size: 1.7rem; }
-  h2 { font-size: 1.1rem; }
-  button { width: 100%; font-size: 0.95rem; }
-  img.goal-img { max-width: 90%; }
+  body { padding: 10px; font-size: 0.9rem; }
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.05rem; }
+  .card { max-width: 100%; padding: 15px; margin: 15px auto; }
+  button { width: 100%; font-size: 0.9rem; padding: 10px; }
+  input, textarea { font-size: 0.9rem; padding: 8px; }
+  .floating-img { width: 100px; max-width: 30%; margin-bottom: 15px; }
+  img.goal-img { max-width: 90%; height: auto; }
+  .result { font-size: 0.9rem; padding: 10px; }
 }
+
 
      .result {
       margin-top: 10px;
@@ -252,6 +280,8 @@ em {
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 </head>
 <body>
 <img src="images/หัวข้อ6.jpg" 
@@ -364,16 +394,20 @@ setInterval(()=>{
 
 function fireworkFinal(){
   document.getElementById('soundFinal').play();
+  // เดิม
   for(let i=0;i<20;i++){
     createFirework(Math.random()*window.innerWidth, Math.random()*window.innerHeight);
   }
-  setTimeout(()=>alert("🎉 ยินดีด้วย! คุณปลดล็อกพลังสูงสุดแล้ว! 🔥"),500);
+  // เพิ่ม confetti สายรุ้ง
+  confetti({
+    particleCount: 200,
+    spread: 90,
+    origin: { y: 0.6 },
+    colors: ['#ff0','#0f0','#00f','#f0f','#0ff','#fff']
+  });
+  setTimeout(()=>alert("🎉 ยินดีด้วย! คุณปลดล็อกพลังสูงสุดแล้ว! 🔥"),800);
 }
-function checkExplosion(){
-  if(stepsCompleted.best && stepsCompleted.challenge && stepsCompleted.plan && stepsCompleted.proud){
-    fireworkFinal();
-  }
-}
+
 
 function showBest(){
   playSound('best');
@@ -400,6 +434,22 @@ function showProud(){
   proudResult.innerHTML=`💖 ภูมิใจ: <b>${proud.value}</b><br>🌟 นำไปใช้: <b>${apply.value}</b><br>${msgs[Math.floor(Math.random()*msgs.length)]}`;
   stepsCompleted.proud=true; checkExplosion();
 }
+
+function playSound(step){
+  let audio = document.getElementById('sound1');
+  if(step==='challenge') audio=document.getElementById('sound2');
+  else if(step==='plan') audio=document.getElementById('sound3');
+  else if(step==='proud') audio=document.getElementById('sound1');
+  audio.play();
+  
+  // ทำให้ปุ่มที่กดสั่น
+  const btn = event?.target;
+  if(btn){
+    btn.classList.add('playing');
+    setTimeout(()=>btn.classList.remove('playing'),300);
+  }
+}
+
 
   // 🎉 ลิบบิ้นตอนเปิดหน้า
   window.addEventListener('load', () => {
