@@ -341,6 +341,12 @@ em {
   <div id="proudResult" class="result"></div>
 </div>
 
+<div class="card" style="text-align:center;">
+  <button onclick="submitAll()">💾 บันทึกคำตอบทั้งหมด</button>
+  <p id="submitStatus" class="result"></p>
+</div>
+
+
 <!-- Audio -->
 <audio id="sound1" src="https://www.soundjay.com/human/applause-01.mp3"></audio>
 <audio id="sound2" src="https://www.soundjay.com/human/applause-02.mp3"></audio>
@@ -348,6 +354,42 @@ em {
 <audio id="soundFinal" src="https://www.soundjay.com/misc/fanfare-trumpets-01.mp3"></audio>
 
 <script>
+
+function submitAll() {
+  // ดึงค่าจาก input ทั้งหมด
+  const data = {
+    name: document.getElementById("name")?.value || "",
+    best: [best1.value, best2.value, best3.value].filter(Boolean).join(", "),
+    learn: learn.value || "",
+    act1: act1.value || "",
+    act2: act2.value || "",
+    act3: act3.value || "",
+    dayPlan: dayPlan.value || "",
+    proud: proud.value || "",
+    apply: apply.value || ""
+  };
+
+  // แสดงสถานะ
+  const status = document.getElementById("submitStatus");
+  status.innerHTML = "⏳ กำลังบันทึกข้อมูล...";
+
+  // ส่งข้อมูลไป Google Sheets ผ่าน Apps Script
+  fetch("https://script.google.com/macros/s/AKfycbxL_CoKBQxKQNdtIiftKh7iK73rieNUW74KogpssFMP5NgaNfamU5TRjysA2PVXUxZAwg/exec", {
+    method: "POST",
+    body: new URLSearchParams(data)
+  })
+  .then(res => res.text())
+  .then(text => {
+    status.innerHTML = "✅ บันทึกคำตอบสำเร็จแล้ว!";
+    if (typeof fireworkFinal === "function") fireworkFinal(); // เรียกใช้เอฟเฟกต์ถ้ามี
+  })
+  .catch(err => {
+    status.innerHTML = "❌ เกิดข้อผิดพลาดในการบันทึก";
+    console.error(err);
+  });
+}
+
+
 let stepsCompleted = {best:false, challenge:false, plan:false, proud:false};
 const emojis = ["🔥","☄️","⭐️","⚡️","💥"];
 const colors = ['#ff1a1a','#ff6600','#ffcc00'];
@@ -477,4 +519,3 @@ function playSound(step){
 </script>
 </body>
 </html>
-
