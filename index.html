@@ -374,7 +374,7 @@ function submitAll() {
   status.innerHTML = "⏳ กำลังบันทึกข้อมูล...";
 
   // ส่งข้อมูลไป Google Sheets ผ่าน Apps Script
-  fetch("https://script.google.com/macros/s/AKfycbwNBMn6DLzdlW75w6O6budiT_qi8TQymk3Dxil96-_C4x987rX5UVK8NCWxW8InapV9iA/exec", {
+  fetch("https://script.google.com/macros/s/AKfycby0sVxSN0UGxpl_bPAkbksriykrwkH84gIcYSVsKVlS9rUcEAqAmeoASF1xW_Tmw4jBiA/exec", {
     method: "POST",
     body: new URLSearchParams(data)
   })
